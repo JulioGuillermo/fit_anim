@@ -18,7 +18,7 @@ func (c *Channel) LoadChannel(code string) {
 	lines := strings.Split(code, "\n")
 	c.loadMetaData(lines[0])
 
-	c.Frames = make([]Frame, 0, c.NumFrames)
+	c.Frames = make([]Frame, 0, len(lines)-1)
 	for i := range c.NumFrames {
 		c.loadFrame(lines[i+1])
 	}
