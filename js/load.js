@@ -6,7 +6,7 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 export async function loadScene(scene) {
   const loader = new GLTFLoader();
   loader.load(
-    "/models/scene4.glb",
+    "/fit_anim/models/scene4.glb",
     function (gltf) {
       scene.add(gltf.scene);
     },

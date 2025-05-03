@@ -9,6 +9,6 @@ func (c *Controller) initCamera() {
 	c.Camera.Move(point.Point{Z: 2.4, Y: 0.7})
 
 	// bg := texture.LoadTexture("/img/bg.avif")
-	bg := texture.LoadTexture("/img/bg_planet_big.png")
+	bg := texture.LoadTexture("/fit_anim/img/bg_planet_big.png")
 	c.Scene.SetBG(bg)
 }

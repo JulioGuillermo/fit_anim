@@ -13,7 +13,7 @@ const clock = new THREE.Clock();
 /** @param {THREE.Scene} scene */
 export async function loadDancers(scene) {
   let loader = new FBXLoader();
-  loader.load("/models/SambaDancing.fbx", function (obj) {
+  loader.load("/fit_anim/models/SambaDancing.fbx", function (obj) {
     if (obj.animations && obj.animations.length) {
       mixer = new THREE.AnimationMixer(obj);
       const action = mixer.clipAction(obj.animations[0]);
@@ -28,7 +28,7 @@ export async function loadDancers(scene) {
   });
 
   loader = new ColladaLoader();
-  loader.load("/models/stormtrooper.dae", function (collada) {
+  loader.load("/fit_anim/models/stormtrooper.dae", function (collada) {
     const avatar = collada.scene;
     avatar.name = "DancerL";
 
@@ -49,7 +49,7 @@ export async function loadDancers(scene) {
 
     scene.add(avatar);
   });
-  loader.load("/models/stormtrooper.dae", function (collada) {
+  loader.load("/fit_anim/models/stormtrooper.dae", function (collada) {
     const avatar = collada.scene;
     avatar.name = "DancerR";
 

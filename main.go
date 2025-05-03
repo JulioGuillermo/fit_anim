@@ -8,8 +8,8 @@ import (
 
 func loadAudioData(c *ctl.Controller) {
 	audio := models.GetAudioFromUrls(
-		"/example/output/output_channel_0",
-		"/example/output/output_channel_1",
+		"/fit_anim/example/output/output_channel_0",
+		"/fit_anim/example/output/output_channel_1",
 	)
 	c.Audio = audio
 }

@@ -9,7 +9,7 @@ export async function initWebAssembly() {
   }
   const go = new globalThis.Go();
   const result = await WebAssembly.instantiateStreaming(
-    fetch("/app.wasm"),
+    fetch("/fit_anim/app.wasm"),
     go.importObject,
   );
   const mod = result.module;
