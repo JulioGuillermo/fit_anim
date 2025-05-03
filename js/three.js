@@ -32,8 +32,8 @@ export async function initScene() {
   renderer.toneMapping = THREE.ACESFilmicToneMapping;
   document.body.appendChild(renderer.domElement);
 
-  const pathTracer = new WebGLPathTracer(renderer);
-  pathTracer.setScene(scene, camera);
+  // const pathTracer = new WebGLPathTracer(renderer);
+  // pathTracer.setScene(scene, camera);
 
   const composer = new EffectComposer(renderer);
   composer.addPass(new RenderPass(scene, camera));
@@ -56,8 +56,8 @@ export async function initScene() {
     updateAnimations();
     camera.aspect = window.innerWidth / window.innerHeight;
     renderer.setSize(window.innerWidth, window.innerHeight);
-    // composer.render();
-    pathTracer.renderSample();
+    composer.render();
+    // pathTracer.renderSample();
   }
   renderer.setAnimationLoop(animationFrame);
 }
