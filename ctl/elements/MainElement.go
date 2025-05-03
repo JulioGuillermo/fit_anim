@@ -13,6 +13,15 @@ import (
 	"github.com/julioguillermo/fit_anim/three/scene"
 )
 
+const (
+	SphIntMax = 0.5
+	SphIntMin = 0.05
+	SphInc    = 0.5
+	SphDec    = 0.3
+	TorusInc  = 0.5
+	TorusDec  = 0.3
+)
+
 type MainElement struct {
 	Scene *scene.GoScene
 
@@ -21,9 +30,6 @@ type MainElement struct {
 
 	TorusMaterial *materials.GoPhysicalMaterial
 	Torus         *three.GoMesh
-
-	SupportMaterial *materials.GoPhysicalMaterial
-	Support         *three.GoMesh
 }
 
 func CreateMainElement(scene *scene.GoScene) *MainElement {
@@ -34,13 +40,13 @@ func CreateMainElement(scene *scene.GoScene) *MainElement {
 }
 
 func (p *MainElement) initMainSph() {
-	geometry := geometry.IcosahedronGeometry(0.5, 10)
+	geometry := geometry.IcosahedronGeometry(0.1, 10)
 	material := materials.PhysicalMaterial("#555588")
 	material.SetEmissive("#5555FF")
 	material.SetEmissiveIntensity(0)
 
 	mesh := three.Mesh(geometry, material)
-	mesh.Move(point.Point{Y: 5})
+	mesh.Move(point.Point{Z: -3, Y: 0.9})
 
 	p.Scene.Add(mesh)
 	p.Sphere = mesh
@@ -48,7 +54,7 @@ func (p *MainElement) initMainSph() {
 }
 
 func (p *MainElement) initMainSphTorus() {
-	geometry := geometry.TorusKnotGeometry(2, 0.1, 100, 10, 3, 4)
+	geometry := geometry.TorusKnotGeometry(0.2, 0.01, 100, 10, 3, 4)
 	material := materials.PhysicalMaterial("#555588")
 	material.SetEmissive("#FF00FF")
 	material.SetEmissiveIntensity(0)
@@ -62,22 +68,8 @@ func (p *MainElement) initMainSphTorus() {
 	p.Torus = mesh
 }
 
-func (p *MainElement) initMainSphSupport() {
-	geometry := geometry.CylinderGeometry(0.1, 0.3, 10, 8)
-	material := materials.PhysicalMaterial("#555588")
-	material.SetEmissive("#00FF00")
-	material.SetEmissiveIntensity(0)
-
-	mesh := three.Mesh(geometry, material)
-
-	p.Scene.Add(mesh)
-	p.SupportMaterial = material
-	p.Support = mesh
-}
-
 func (p *MainElement) Init() {
 	p.initMainSph()
-	p.initMainSphSupport()
 	p.initMainSphTorus()
 }
 
@@ -92,21 +84,8 @@ func (p *MainElement) RenderScene(
 ) {
 	p.Sphere.Rotate(point.Point{Y: delta})
 
-	l := frames.FreqEq(240).Int()
-	sphE := p.SphereMaterial.GetEmissiveIntensity()
-	if l > 0.01 {
-		p.SphereMaterial.SetEmissiveIntensity(sphE*0.5 + 0.5)
-	} else {
-		p.SphereMaterial.SetEmissiveIntensity(sphE * 0.9)
-	}
-
-	h := frames.FreqGt(10000).Int()
-	p.TorusMaterial.SetEmissiveIntensity(h * h)
-
-	m := frames.FreqGt(500).FreqLt(5000).Int()
-	if m > 0.6 {
-		p.SupportMaterial.SetEmissiveIntensity(1)
-	} else {
-		p.SupportMaterial.SetEmissiveIntensity(0)
-	}
+	avgInt := frames.AvgIntencities() * 100
+	maxInt := frames.MaxIntencity()
+	p.SphereMaterial.SetEmissiveIntensity(avgInt)
+	p.TorusMaterial.SetEmissiveIntensity(maxInt)
 }

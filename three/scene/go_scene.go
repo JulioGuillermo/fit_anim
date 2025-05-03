@@ -25,3 +25,7 @@ func (p *GoScene) AddJS(o js.Value) {
 func (p *GoScene) SetBG(texture *texture.GoTexture) {
 	p.Scene.Set("background", texture.Texture)
 }
+
+func (p *GoScene) GetJSObjByName(name string) js.Value {
+	return p.Scene.Call("getObjectByName", name, true)
+}

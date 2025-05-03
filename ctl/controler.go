@@ -4,8 +4,10 @@ import (
 	"time"
 
 	"github.com/julioguillermo/fit_anim/audio/models"
+	"github.com/julioguillermo/fit_anim/ctl/dancers"
 	"github.com/julioguillermo/fit_anim/ctl/elements"
 	"github.com/julioguillermo/fit_anim/three/camera"
+	"github.com/julioguillermo/fit_anim/three/light"
 	"github.com/julioguillermo/fit_anim/three/renderer"
 	"github.com/julioguillermo/fit_anim/three/scene"
 )
@@ -17,13 +19,21 @@ type Controller struct {
 	Camera   *camera.GoCamera
 	Renderer *renderer.GoRenderer
 
-	FreqBoxs0 *elements.GoFreqBoxs
-	FreqBoxs1 *elements.GoFreqBoxs
-
-	FreqSphs0 *elements.GoFreqSphs
-	FreqSphs1 *elements.GoFreqSphs
+	TopLight *light.GoDirectionalLight
 
 	MainElement *elements.MainElement
+
+	PiramidL1 *elements.GoNotesPiramid
+	PiramidL2 *elements.GoNotesPiramid
+	PiramidL3 *elements.GoNotesPiramid
+	PiramidL4 *elements.GoNotesPiramid
+	PiramidL5 *elements.GoNotesPiramid
+
+	PiramidR1 *elements.GoNotesPiramid
+	PiramidR2 *elements.GoNotesPiramid
+	PiramidR3 *elements.GoNotesPiramid
+	PiramidR4 *elements.GoNotesPiramid
+	PiramidR5 *elements.GoNotesPiramid
 }
 
 func (c *Controller) InitScene(scene *scene.GoScene, camera *camera.GoCamera, renderer *renderer.GoRenderer, start time.Time) {
@@ -61,12 +71,24 @@ func (c *Controller) RenderScene(
 		frames,
 	)
 
-	ch0 := frames.ChanEq(0)
-	ch1 := frames.ChanEq(1)
+	c.PiramidL1.Update(frames.ChanEq(0))
+	c.PiramidL2.Update(frames.ChanEq(0))
+	c.PiramidL3.Update(frames.ChanEq(0))
+	c.PiramidL4.Update(frames.ChanEq(0))
+	c.PiramidL5.Update(frames.ChanEq(0))
 
-	c.FreqBoxs0.Update(ch0)
-	c.FreqBoxs1.Update(ch1)
+	c.PiramidR1.Update(frames.ChanEq(1))
+	c.PiramidR2.Update(frames.ChanEq(1))
+	c.PiramidR3.Update(frames.ChanEq(1))
+	c.PiramidR4.Update(frames.ChanEq(1))
+	c.PiramidR5.Update(frames.ChanEq(1))
 
-	c.FreqSphs0.Update(ch0)
-	c.FreqSphs1.Update(ch1)
+	maxInt := frames.MaxIntencity()
+
+	c.TopLight.SetIntencity(maxInt)
+
+	dancers.UpdateLights(c.Scene.GetJSObjByName("TopLights"), maxInt)
+	dancers.UpdateMainDancer(c.Scene.GetJSObjByName("Alpha_Surface"), maxInt)
+	dancers.UpdateDancer(c.Scene.GetJSObjByName("DancerL"), maxInt)
+	dancers.UpdateDancer(c.Scene.GetJSObjByName("DancerR"), maxInt)
 }

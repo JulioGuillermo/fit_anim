@@ -6,11 +6,12 @@ import (
 )
 
 func (c *Controller) initLights() {
-	dirLight := light.DirectionalLight("#FFFFFF", 1)
-	dirLight.Move(point.Point{Z: 2, Y: 2, X: -2})
+	dirLight := light.DirectionalLight("#FFFFFF", 0.2)
+	dirLight.Move(point.Point{Z: 1, Y: 2})
 	dirLight.ToScene(c.Scene)
+	c.TopLight = dirLight
 
-	pointLight := light.PointLight("#FFFFFF", 5)
-	pointLight.Move(point.Point{Z: 2, Y: -2, X: -2})
-	c.Scene.Add(pointLight)
+	// pointLight := light.PointLight("#FFFFFF", 5)
+	// pointLight.Move(point.Point{Z: 2, Y: 1})
+	// c.Scene.Add(pointLight)
 }

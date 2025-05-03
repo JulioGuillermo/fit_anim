@@ -4,11 +4,18 @@
         <meta charset="utf-8" />
         <title>FitAnim</title>
         <link rel="stylesheet" href="/css/style.css" />
+
+        <!-- "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js", -->
         <script type="importmap">
             {
                 "imports": {
                     "three": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.module.js",
-                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.176.0/examples/jsm/"
+                    "three_": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.webgpu.js",
+                    "three/webgpu": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.webgpu.js",
+                    "three/tsl": "https://cdn.jsdelivr.net/npm/three@0.176.0/build/three.tsl.js",
+                    "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.176.0/examples/jsm/",
+                    "postprocessing": "https://cdn.jsdelivr.net/npm/postprocessing@6.37.3/build/index.js",
+                    "three-gpu-pathtracer": "https://cdn.jsdelivr.net/npm/three-gpu-pathtracer@0.0.23/build/index.module.js"
                 }
             }
         </script>
@@ -17,21 +24,20 @@
     <body>
         <script src="/js/wasm_exec.js"></script>
         <script type="module" src="/js/app.js"></script>
-        <!-- <audio
+        <audio
             style="position: fixed; top: 0.5rem; right: 0.5rem"
             src="/example/audio.mp3"
             id="audio"
-            autoplay
             loop
             controls
-        ></audio> -->
-        <audio
+        ></audio>
+        <!-- <audio
             style="position: fixed; top: 0.5rem; right: 0.5rem"
             src="/example/tu_eras_quien.mp3"
             id="audio"
             autoplay
             loop
             controls
-        ></audio>
+        ></audio> -->
     </body>
 </html>
