@@ -1,9 +1,6 @@
 // @ts-check
 import * as THREE from "three";
-// import { EffectComposer } from "three/addons/postprocessing/EffectComposer.js";
-// import { RenderPass } from "three/addons/postprocessing/RenderPass.js";
-// import { OutputPass } from "three/addons/postprocessing/OutputPass.js";
-// import { BloomPass } from "three/addons/postprocessing/BloomPass.js";
+import { loadScene } from "./load.js";
 
 globalThis.THREE = THREE;
 
@@ -15,7 +12,8 @@ export async function initScene() {
     0.1,
     1000,
   );
-  // new THREE.MeshPhysicalMaterial().emissiveIntensity
+
+  await loadScene(scene);
 
   const renderer = new THREE.WebGLRenderer({
     antialias: true,
